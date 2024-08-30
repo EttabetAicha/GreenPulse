@@ -1,10 +1,10 @@
 package com.example.CarbonPersone.model;
 
 public class User {
-    private String id;
+    private  String id;
     private String name;
     private int age;
-    private Consumption consumption;
+    private  Consumption consumption;
 
     public User(String id, String name, int age) {
         this.id = id;
@@ -12,6 +12,7 @@ public class User {
         this.age = age;
         this.consumption = new Consumption();
     }
+    public User(){}
 
     public String getId() {
         return id;

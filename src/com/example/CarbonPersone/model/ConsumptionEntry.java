@@ -3,14 +3,17 @@ package com.example.CarbonPersone.model;
 import java.util.Date;
 
 public class ConsumptionEntry {
-    private final Date startDate;
-    private final Date endDate;
-    private final double amount;
+    private  Date startDate;
+    private  Date endDate;
+    private  double amount;
 
     public ConsumptionEntry(Date startDate, Date endDate, double amount) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
+    }
+    public ConsumptionEntry(){
+
     }
 
     public Date getStartDate() {
