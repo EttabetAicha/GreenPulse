@@ -1,7 +1,7 @@
-package com.example.CarbonPersone.main;
+package com.example.carbonpersonne.main;
 
-import com.example.CarbonPersone.model.User;
-import com.example.CarbonPersone.model.UserManager;
+import com.example.carbonpersonne.model.UserEntry;
+import com.example.carbonpersonne.service.UserService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        UserManager userManager = new UserManager();
+        UserService userManager = new UserService();
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -32,11 +32,10 @@ public class Main {
                 continue;
             }
 
-            // Declare 'id' and other variables here
             String id;
             String name;
             int age;
-            User user;
+            UserEntry user;
             switch (option) {
                 case 1:
                     // Create User
@@ -95,7 +94,7 @@ public class Main {
                         String startDateStr = scanner.nextLine();
                         System.out.print("Enter End Date (yyyy-MM-dd): ");
                         String endDateStr = scanner.nextLine();
-                        System.out.print("Enter Amount (kg): ");
+                        System.out.print("Enter Amount : ");
                         double amount;
                         try {
                             amount = Double.parseDouble(scanner.nextLine());
@@ -136,7 +135,6 @@ public class Main {
                     break;
 
                 case 7:
-                    // Exit
                     scanner.close();
                     System.out.println("Exiting...");
                     return;

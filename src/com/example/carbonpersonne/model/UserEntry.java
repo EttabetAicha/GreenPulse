@@ -1,18 +1,20 @@
-package com.example.CarbonPersone.model;
+package com.example.carbonpersonne.model;
 
-public class User {
+import com.example.carbonpersonne.service.ConsumptionService;
+
+public class UserEntry {
     private  String id;
     private String name;
     private int age;
-    private  Consumption consumption;
+    private ConsumptionService consumption;
 
-    public User(String id, String name, int age) {
+    public UserEntry(String id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.consumption = new Consumption();
+        this.consumption = new ConsumptionService();
     }
-    public User(){}
+    public UserEntry(){}
 
     public String getId() {
         return id;
@@ -34,7 +36,7 @@ public class User {
         this.age = age;
     }
 
-    public Consumption getConsumption() {
+    public ConsumptionService getConsumption() {
         return consumption;
     }
 

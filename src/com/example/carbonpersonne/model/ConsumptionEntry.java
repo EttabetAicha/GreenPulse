@@ -1,4 +1,4 @@
-package com.example.CarbonPersone.model;
+package com.example.carbonpersonne.model;
 
 import java.util.Date;
 
