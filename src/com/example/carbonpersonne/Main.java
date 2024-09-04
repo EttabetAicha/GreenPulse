@@ -1,4 +1,4 @@
-package com.example.carbonpersonne.main;
+package com.example.carbonpersonne;
 
 import com.example.carbonpersonne.model.UserEntry;
 import com.example.carbonpersonne.service.UserService;
@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         UserService userManager = new UserService();
         Scanner scanner = new Scanner(System.in);
@@ -93,7 +94,7 @@ public class Main {
                         String startDateStr = scanner.nextLine();
                         System.out.print("Enter End Date (yyyy-MM-dd): ");
                         String endDateStr = scanner.nextLine();
-                        System.out.print("Enter Amount : ");
+                        System.out.print("Enter Amount: ");
                         double amount;
                         try {
                             amount = Double.parseDouble(scanner.nextLine());
@@ -109,7 +110,7 @@ public class Main {
                                 System.out.println("Start date must be before end date.");
                                 continue;
                             }
-                            user.getConsumption().addConsumption(startDate, endDate, amount);
+                            user.addConsumptionEntry(startDate, endDate, amount);
                             System.out.println("Consumption added successfully.");
                         } catch (ParseException e) {
                             System.out.println("Invalid date format. Use yyyy-MM-dd.");
@@ -124,13 +125,22 @@ public class Main {
                     id = scanner.nextLine();
                     user = userManager.getUser(id);
                     if (user != null) {
-                        user.getConsumption().displayFootprint();
+                        user.displayFootprint();
                     } else {
                         System.out.println("User not found.");
                     }
                     break;
 
                 case 6:
+                    System.out.print("Enter User ID: ");
+                    id = scanner.nextLine();
+                    user = userManager.getUser(id);
+                    if (user != null) {
+                        System.out.println("Generating report for user: " + user.getName());
+                        user.displayConsumptionReport();
+                    } else {
+                        System.out.println("User not found.");
+                    }
                     break;
 
                 case 7:
