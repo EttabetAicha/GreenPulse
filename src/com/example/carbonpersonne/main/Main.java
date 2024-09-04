@@ -38,7 +38,6 @@ public class Main {
             UserEntry user;
             switch (option) {
                 case 1:
-                    // Create User
                     System.out.print("Enter ID: ");
                     id = scanner.nextLine();
                     System.out.print("Enter Name: ");

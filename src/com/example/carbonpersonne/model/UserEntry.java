@@ -1,20 +1,24 @@
 package com.example.carbonpersonne.model;
 
-import com.example.carbonpersonne.service.ConsumptionService;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserEntry {
-    private  String id;
+    private String id;
     private String name;
     private int age;
-    private ConsumptionService consumption;
+    private List<ConsumptionEntry> consumption;
 
     public UserEntry(String id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.consumption = new ConsumptionService();
+        this.consumption = new ArrayList<>();
     }
-    public UserEntry(){}
+
+    public UserEntry() {
+        this.consumption = new ArrayList<>();
+    }
 
     public String getId() {
         return id;
@@ -36,8 +40,12 @@ public class UserEntry {
         this.age = age;
     }
 
-    public ConsumptionService getConsumption() {
+    public List<ConsumptionEntry> getConsumption() {
         return consumption;
+    }
+
+    public void addConsumptionEntry(ConsumptionEntry entry) {
+        this.consumption.add(entry);
     }
 
     @Override
