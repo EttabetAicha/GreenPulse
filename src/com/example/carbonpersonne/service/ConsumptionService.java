@@ -4,6 +4,7 @@ import com.example.carbonpersonne.model.ConsumptionEntry;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,19 +15,9 @@ public class ConsumptionService {
         this.consumptionEntries = new ArrayList<>();
     }
 
-    public boolean addConsumption(Date startDate, Date endDate, double amount) {
-        if (startDate == null || endDate == null || startDate.after(endDate)) {
-            System.out.println("Invalid dates provided. Start date must be before end date.");
-            return false;
-        }
-        if (amount <= 0) {
-            System.out.println("Invalid amount provided. Amount must be greater than 0.");
-            return false;
-        }
-
+    public void addConsumption(Date startDate, Date endDate, double amount) {
         ConsumptionEntry entry = new ConsumptionEntry(startDate, endDate, amount);
         consumptionEntries.add(entry);
-        return true;
     }
 
     public double calculateTotalConsumption() {
@@ -34,28 +25,54 @@ public class ConsumptionService {
         for (ConsumptionEntry entry : consumptionEntries) {
             total += entry.getAmount();
         }
-        return Math.round(total * 100.0) / 100.0;
+        return total;
+    }
+
+    public double calculateDailyConsumption() {
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        return calculateConsumptionInRange(cal.getTime(), now);
+    }
+
+    public double calculateWeeklyConsumption() {
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.WEEK_OF_YEAR, -1);
+        return calculateConsumptionInRange(cal.getTime(), now);
+    }
+
+    public double calculateMonthlyConsumption() {
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        return calculateConsumptionInRange(cal.getTime(), now);
+    }
+
+    private double calculateConsumptionInRange(Date startDate, Date endDate) {
+        double total = 0;
+        for (ConsumptionEntry entry : consumptionEntries) {
+            if (!entry.getEndDate().before(startDate) && !entry.getStartDate().after(endDate)) {
+                total += entry.getAmount();
+            }
+        }
+        return total;
     }
 
     public void displayFootprint() {
-        if (consumptionEntries.isEmpty()) {
-            System.out.println("No consumption data available.");
-            return;
-        }
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Carbon Consumption Details:");
-        System.out.printf("%-15s %-15s %-15s%n", "Start Date", "End Date", "Carbon Consumed");
-        System.out.println("--------------------------------------------");
-
         for (ConsumptionEntry entry : consumptionEntries) {
-            System.out.printf("%-15s %-15s %-15.2f%n",
-                    sdf.format(entry.getStartDate()),
-                    sdf.format(entry.getEndDate()),
-                    entry.getAmount());
+            System.out.println("Start Date: " + sdf.format(entry.getStartDate()) +
+                    " - End Date: " + sdf.format(entry.getEndDate()) +
+                    " - Carbon Consumed: " + entry.getAmount());
         }
+        System.out.println("Total Carbon Footprint: " + calculateTotalConsumption());
+    }
 
-        System.out.println("--------------------------------------------");
-        System.out.printf("Total Carbon Footprint: %.2f%n", calculateTotalConsumption());
+    public void displayConsumptionReport() {
+        System.out.println("Daily Consumption: " + calculateDailyConsumption());
+        System.out.println("Weekly Consumption: " + calculateWeeklyConsumption());
+        System.out.println("Monthly Consumption: " + calculateMonthlyConsumption());
     }
 }
